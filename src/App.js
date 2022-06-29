@@ -1,25 +1,34 @@
-import logo from './logo.svg';
-import './App.css';
+import { useSelector } from 'react-redux'
+import './App.css'
+import Backdrop from './components/backdrop/Backdrop'
+import Loader from './components/loader/Laoder'
+import Notifications from './components/notifications/Notifications'
+import { Header, Hero, UsersList, CreateUser } from './features'
+import EditUser from './features/users/EditUser'
 
 function App() {
+  const { loading } = useSelector((state) => state.users)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='text-base bg-body flex flex-col min-h-screen overflow-hidden'>
+      <Header />
+      <main>
+        <Hero />
+        <UsersList />
+        <CreateUser />
+        <EditUser />
+
+        {loading !== 'idle' ? (
+          <div>
+            <Loader />
+            <Backdrop />
+          </div>
+        ) : null}
+
+        <Notifications />
+      </main>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
